@@ -26,6 +26,12 @@
     document.querySelector('.cart').addEventListener('mouseleave', () => {
       Cart.toggleDisplayOfCart('hide');
     });
+    document.querySelector('.products').addEventListener('click', (e) => {
+      if (e.target.tagName === 'BUTTON' && e.target.classList.contains('product-item__btn-buy')) {
+        const id = +e.target.dataset['id'];
+        cart.addProduct(id);
+      }
+    })
   };
 </script>
 </body>

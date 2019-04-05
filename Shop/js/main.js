@@ -134,12 +134,14 @@ class Cart {
     }
   }
 
-  addProduct(product) {
+  addProduct(id) {
     // если уже добавлен изменить количество и общую стоимость
     // если нет - отрисовать
+    console.log(id);
+    console.log(this.contents);
   }
 
-  removeProduct(product) {
+  removeProduct(id) {
     // если в корзине больше, чем один продукт - изменить количество и общую ст-ть
     // если 1 продукт - удалить элемент
   }
