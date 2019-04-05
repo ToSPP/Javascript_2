@@ -1,22 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Интернет-магазин</title>
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css?family=Dancing+Script:700"
-          rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>Интернет-магазин</title>
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css?family=Dancing+Script:700"
+        rel="stylesheet">
 </head>
 <body>
-    <header>
-        <div class="header__logo logo">E-SHOP</div>
-        <button class="header__btn btn-cart" type="button">Корзина</button>
-        <div class="cart"></div>
-    </header>
-    <main>
-        <div class="products"></div>
-    </main>
-    <script src="js/main.js"></script>
+<header>
+  <div class="header__logo logo">E-SHOP</div>
+  <button class="header__btn btn-cart" type="button">Корзина</button>
+  <div class="cart"></div>
+</header>
+<main>
+  <div class="products"></div>
+</main>
+<script src="js/main.js"></script>
+<script>
+  window.onload = () => {
+    document.querySelector('.btn-cart').addEventListener('click', () => {
+      Cart.toggleCart();
+    });
+    document.querySelector('.cart').addEventListener('mouseleave', () => {
+      Cart.hideCart();
+    });
+  };
+</script>
 </body>
 </html>

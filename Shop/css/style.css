@@ -62,7 +62,6 @@ header {
 }
 
 .cart {
-  display: none;
   position: absolute;
   top: 70px;
   right: 10px;
@@ -71,17 +70,21 @@ header {
   padding: 10px;
   background-color: #fff;
   border: 1px solid #ddd;
+  opacity: 0;
+  transition: opacity .5s;
+}
+
+.cart_active {
+  opacity: 1;
 }
 
 .cart-item {
   position: relative;
   display: flex;
   align-items: flex-start;
-  margin-bottom: 25px;
-}
-
-.cart-item:last-child {
-  margin-bottom: 0;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ccc;
 }
 
 .cart-item__desc {
