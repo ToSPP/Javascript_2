@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hamburger</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="hamburger">
+  <h3>Выберите гамбургер:</h3>
+  <form action="#" class="hamburger__choose">
+    <div class="hamburger__feature">
+      <h4>Размер:</h4>
+      <label>
+        <input type="radio" name="h_size" value="small" checked> маленький
+      </label>
+      <label>
+        <input type="radio" name="h_size" value="big"> большой
+      </label>
+    </div>
+    <div class="hamburger__feature">
+      <h4>Начинка:</h4>
+      <label>
+        <input type="radio" name="h_stuffing" value="cheese" checked> с сыром
+      </label>
+      <label>
+        <input type="radio" name="h_stuffing" value="salad"> с салатом
+      </label>
+      <label>
+        <input type="radio" name="h_stuffing" value="potato"> с картофелем
+      </label>
+    </div>
+    <div class="hamburger__feature">
+      <h4>Дополнительно:</h4>
+      <label>
+        <input type="checkbox" name="h_spice" value="spice"> приправа
+      </label>
+      <label>
+        <input type="checkbox" name="h_spice" value="mayo"> майонез
+      </label>
+    </div>
+    <div class="buttons">
+      <button class="btn" type="submit">Рассчитать</button>
+      <button class="btn" type="reset">Очистить</button>
+    </div>
+  </form>
+  <div class="hamburger__total">
+    <h4>Итого:</h4>
+    <div class="hamburger__total-desc"></div>
+    <div class="hamburger__total">
+      Стоимость гамбургера: <span id="h_cost">0</span> руб.,
+      калорийность: <span id="h_calories">0</span> ккал.
+    </div>
+  </div>
+</div>
+<script src="js/hamburger.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: Cambria, sans-serif, serif;
+  font-size: 18px;
+}
+
+body {
+  margin-top: 100px;
+  display: flex;
+  justify-content: center;
+  background: #323232;
+  color: #fff;
+}
+
+body::after {
+  content: "";
+  background: url("../img/hamburger_bg.png") center;
+  opacity: 0.1;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+.hamburger {
+  width: 768px;
+}
+
+.hamburger__choose {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.hamburger__feature {
+  flex: 1
+}
+
+.hamburger h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.hamburger h4 {
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-size: 1.2rem;
+}
+
+.hamburger label {
+  margin-left: 30px;
+  display: flex;
+  align-items: center;
+  line-height: 1.5rem;
+}
+
+.hamburger input {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 5px;
+}
+
+.buttons {
+  width: 100%;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.btn {
+  margin: 0 25px;
+  width: 150px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 7px;
+  color: #fff;
+  background-color: #7c7c7c;
+  border: 1px solid transparent;
+  font-size: 1rem;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.4s;
+}
+
+.btn:hover {
+  color: #7c7c7c;
+  background-color: #fff;
+  border: 1px solid #7c7c7c;
+}
+
