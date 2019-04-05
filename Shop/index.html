@@ -12,24 +12,39 @@
 <header>
   <div class="header__logo logo">E-SHOP</div>
   <button class="header__btn btn-cart" type="button">Корзина</button>
-  <div class="cart" aria-hidden="true"></div>
+  <div class="cart" aria-hidden="true">
+    <div class="cart__items"></div>
+  </div>
 </header>
 <main>
   <div class="products"></div>
 </main>
 <script src="js/main.js"></script>
 <script>
+  'use strict';
+
   window.onload = () => {
-    document.querySelector('.btn-cart').addEventListener('click', () => {
-      Cart.toggleDisplayOfCart();
-    });
-    document.querySelector('.cart').addEventListener('mouseleave', () => {
-      Cart.toggleDisplayOfCart('hide');
+    document.querySelector('.btn-cart').addEventListener('click', () => Cart.toggleDisplayOfCart());
+
+    const cartElem = document.querySelector('.cart');
+    // cartElem.addEventListener('mouseleave', () => Cart.toggleDisplayOfCart('hide'));
+    cartElem.addEventListener('click', (e) => {
+      if (e.target.tagName === 'BUTTON' && e.target.classList.contains('btn-cancel')) {
+        cart.removeProduct({
+          id_product: +e.target.dataset['id'],
+          product_name: e.target.dataset['name'],
+          price: +e.target.dataset['price'],
+        });
+      }
     });
     document.querySelector('.products').addEventListener('click', (e) => {
       if (e.target.tagName === 'BUTTON' && e.target.classList.contains('product-item__btn-buy')) {
-        const id = +e.target.dataset['id'];
-        cart.addProduct(id);
+        cart.addProduct({
+          id_product: +e.target.dataset['id'],
+          product_name: e.target.dataset['name'],
+          price: +e.target.dataset['price'],
+          quantity: 1,
+        });
       }
     })
   };
