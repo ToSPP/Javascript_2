@@ -121,6 +121,17 @@ class Cart {
       .catch(error => console.log(error));
   }
 
+  _changeCartRequest(url) {
+    return fetch(url)
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        return data.result;
+      })
+      .catch(error => console.log(error));
+  }
+
   static toggleDisplayOfCart(action = 'toggle') {
     switch (action) {
       case 'show':
@@ -136,76 +147,86 @@ class Cart {
   }
 
   addProduct(product) {
-    // Найдем индекс продукта, если он уже присутствует в корзине
-    const idx = this.contents.findIndex(el => el.id_product === product.id_product);
+    this._changeCartRequest(`${API}/responses/addToBasket.json`)
+      .then(result => {
+        if (!!result) {
+          // Найдем индекс продукта, если он уже присутствует в корзине
+          const idx = this.contents.findIndex(el => el.id_product === product.id_product);
 
-    if (!!~idx) {
-      // Если такой продукт уже есть в корзине
+          if (!!~idx) {
+            // Если такой продукт уже есть в корзине
 
-      // Увеличиваем количество
-      const qty = ++this.contents[idx].quantity;
-      // Увеличиваем общую сумму корзины
-      this.amount += this.contents[idx].price;
-      // Находим нужный элемент
-      const element = document.querySelector(`.cart__items [data-id='${product.id_product}']`);
-      // Присвоим новое количество
-      element.querySelector('.cart-item__qty').textContent = qty;
-      // Присвоим новую сумму
-      element.querySelector('.cart-item__sum').textContent = qty * this.contents[idx].price;
-    } else {
-      // Иначе - создаем новый элемент корзины и добавляем его
-      const prod = new CartItem(product);
-      this.contents.push(prod);
-      this.amount += prod.price;
-      // Если корзина была пуста, то добавим "Итого"
-      if (0 >= this.countGoods++) {
-        this._renderCartTotal();
-      }
-      // Добавим элемент в DOM
-      document.querySelector('.cart__items').insertAdjacentHTML('beforeend', prod.render());
-    }
-    // Отобразим общую сумму
-    this.setTotalAmount();
+            // Увеличиваем количество
+            const qty = ++this.contents[idx].quantity;
+            // Увеличиваем общую сумму корзины
+            this.amount += this.contents[idx].price;
+            // Находим нужный элемент
+            const element = document.querySelector(`.cart__items [data-id='${product.id_product}']`);
+            // Присвоим новое количество
+            element.querySelector('.cart-item__qty').textContent = qty;
+            // Присвоим новую сумму
+            element.querySelector('.cart-item__sum').textContent = qty * this.contents[idx].price;
+          } else {
+            // Иначе - создаем новый элемент корзины и добавляем его
+            const prod = new CartItem(product);
+            this.contents.push(prod);
+            this.amount += prod.price;
+            // Если корзина была пуста, то добавим "Итого"
+            if (0 >= this.countGoods++) {
+              this._renderCartTotal();
+            }
+            // Добавим элемент в DOM
+            document.querySelector('.cart__items').insertAdjacentHTML('beforeend', prod.render());
+          }
+          // Отобразим общую сумму
+          this.setTotalAmount();
+        }
+      });
   }
 
   removeProduct(product) {
-    // Найдем индекс продукта в массиве
-    const idx = this.contents.findIndex(el => el.id_product === product.id_product);
+    this._changeCartRequest(`${API}/responses/deleteFromBasket.json`)
+      .then(result => {
+        if (!!result) {
+          // Найдем индекс продукта в массиве
+          const idx = this.contents.findIndex(el => el.id_product === product.id_product);
 
-    if (!!~idx) {
-      // Находим нужный элемент
-      const element = document.querySelector(`.cart__items [data-id='${product.id_product}']`);
+          if (!!~idx) {
+            // Находим нужный элемент
+            const element = document.querySelector(`.cart__items [data-id='${product.id_product}']`);
 
-      if (this.contents[idx].quantity > 1) {
-        // Если в корзине количество продукта больше, чем 1
+            if (this.contents[idx].quantity > 1) {
+              // Если в корзине количество продукта больше, чем 1
 
-        // Уменьшаем количество
-        const qty = --this.contents[idx].quantity;
-        // Уменьшаем общую сумму корзины
-        this.amount -= this.contents[idx].price;
-        // Присвоим новое количество
-        element.querySelector('.cart-item__qty').textContent = qty;
-        // Присвоим новую сумму
-        element.querySelector('.cart-item__sum').textContent = qty * this.contents[idx].price;
-      } else {
-        // Иначе - уменьшаем количество продуктов в корзине
-        this.countGoods--;
-        // Уменьшаем общую сумму корзины
-        this.amount -= this.contents[idx].price;
-        // Удаляем элемент из DOM
-        element.remove();
-        // Удаляем продукт из общего массива
-        this.contents.splice(idx, 1);
-      }
-    }
+              // Уменьшаем количество
+              const qty = --this.contents[idx].quantity;
+              // Уменьшаем общую сумму корзины
+              this.amount -= this.contents[idx].price;
+              // Присвоим новое количество
+              element.querySelector('.cart-item__qty').textContent = qty;
+              // Присвоим новую сумму
+              element.querySelector('.cart-item__sum').textContent = qty * this.contents[idx].price;
+            } else {
+              // Иначе - уменьшаем количество продуктов в корзине
+              this.countGoods--;
+              // Уменьшаем общую сумму корзины
+              this.amount -= this.contents[idx].price;
+              // Удаляем элемент из DOM
+              element.remove();
+              // Удаляем продукт из общего массива
+              this.contents.splice(idx, 1);
+            }
+          }
 
-    if (0 >= this.countGoods) {
-      // Если в корзине нет продуктов - удалим общую сумму
-      document.querySelector('.cart-total').remove();
-    } else {
-      // Отобразим общую сумму
-      this.setTotalAmount();
-    }
+          if (0 >= this.countGoods) {
+            // Если в корзине нет продуктов - удалим общую сумму
+            document.querySelector('.cart-total').remove();
+          } else {
+            // Отобразим общую сумму
+            this.setTotalAmount();
+          }
+        }
+      });
   }
 
   setTotalAmount() {
