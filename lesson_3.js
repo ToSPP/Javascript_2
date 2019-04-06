@@ -20,8 +20,20 @@
 // Решение:
 
 let getRequest = url => {
-  fetch(url)
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch(error => console.log(error))
+  return new Promise((resolve, reject) => {
+    let xhr = new XMLHttpRequest();
+
+    xhr.open('GET', url, true);
+
+    xhr.onreadystatechange = () => {
+      if(xhr.readyState === 4){
+        if(xhr.status !== 200){
+          reject('error');
+        } else {
+          resolve(xhr.responseText);
+        }
+      }
+    };
+    xhr.send()
+  });
 };
