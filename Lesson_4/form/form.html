@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Form</title>
+  <link rel="stylesheet" href="form.css">
+</head>
+<body>
+<div class="container">
+  <h3>Заполните форму</h3>
+  <form action="form.html" class="form">
+    <label>
+      <span class="title">Имя</span>
+      <input type="text" class="input__name">
+      <span class="hint hint__name">Имя содержит только буквы</span>
+    </label>
+    <label>
+      <span class="title">Телефон</span>
+      <input type="text" class="input__phone">
+      <span class="hint hint__phone">Телефон имеет вид +7(000)000-0000</span>
+    </label>
+    <label>
+      <span class="title">E-mail</span>
+      <input type="text" class="input__email">
+      <span class="hint hint__email">E-mail имеет вид mymail@mail.ru, или my.mail@mail.ru, или my-mail@mail.ru</span>
+    </label>
+    <label>
+      <span class="title">Сообщение</span>
+      <textarea type="text" class="textarea__msg"></textarea>
+      <span class="hint">Пиши, что хочешь =)</span>
+    </label>
+    <div class="btn">
+      <button type="submit" class="btn__submit">Отправить</button>
+    </div>
+  </form>
+</div>
+
+<script src="FormValidator.js"></script>
+</body>
+</html>
