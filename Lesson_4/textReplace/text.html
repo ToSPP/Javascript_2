@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TextToReplace</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <textarea class="text text-initial" readonly>
+One: 'Hi Mary.'
+Two: 'Oh, hi.'
+One: 'How are you doing?'
+Two: 'I'm doing alright. How about you?'
+One: 'Not too bad. The weather is great isn't it?'
+Two: 'Yes. It's absolutely beautiful today.'
+One: 'I wish it was like this more frequently.'
+Two: 'Me too.'
+One: 'So where are you going now?'
+Two: 'I'm going to meet a friend of mine at the department store.'
+One: 'Going to do a little shopping?'
+Two: 'Yeah, I have to buy some presents for my parents.'
+One: 'What's the occasion?'
+Two: 'It's their anniversary.'
+One: 'That's great. Well, you better get going. You don't want to be late.'
+Two: 'I'll see you next time.'
+One: 'Sure. Bye.'</textarea>
+  <textarea class="text text-converted" readonly></textarea>
+  <button type="button" class="btn btn-rough">Грубая замена кавычек</button>
+  <button type="button" class="btn btn-clever">Умная замена кавычек</button>
+  <script>
+    'use strict';
+
+    const regexp_rough = /'/g;
+    const regexp_clever = /\B'|'\B/g;
+    let text = document.querySelector('.text-initial').value;
+    let textConverted = '';
+
+    document.querySelector('body').addEventListener('click', e => {
+      if (e.target.classList.contains('btn-rough')) {
+        textConverted = text.replace(regexp_rough, '"');
+      }
+      if (e.target.classList.contains('btn-clever')) {
+        textConverted = text.replace(regexp_clever, '"');
+      }
+
+      document.querySelector('.text-converted').textContent = textConverted;
+    });
+  </script>
+</body>
+</html>
