@@ -1,0 +1,39 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 1200px;
+  margin: 50px auto 0;
+  text-align: center;
+}
+
+.text {
+  box-sizing: border-box;
+  width: 49%;
+  height: 270px;
+  padding: 5px;
+  resize: none;
+  outline: none;
+}
+
+.btn {
+  width: 200px;
+  height: 40px;
+  background-color: #2546a5;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.5s;
+}
+
+.btn:hover {
+  background-color: #fff;
+  border: 1px solid #2546a5;
+  color: #2546a5;
+}
+
