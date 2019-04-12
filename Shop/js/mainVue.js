@@ -8,7 +8,7 @@ const app = new Vue({
     catalogUrl: 'catalogData.json',
     cartUrl: 'getBasket.json',
     productsAll: [], // все объекты товаров (каталог)
-    productsRender: [], // товары для рендера
+    filteredProducts: [], // отфильтрованные товары
     cartList: [], // объекты товаров (корзина)
     isVisibleCart: false,
     imgCatalog: 'https://placehold.it/200x150', // заглушка картинки в каталоге
@@ -57,7 +57,7 @@ const app = new Vue({
     }, // получаем общую сумму корзины
     filter() {
       const regexp = new RegExp(this.filterText, 'i');
-      this.productsRender = this.productsAll.filter(product => regexp.test(product.product_name));
+      this.filteredProducts = this.productsAll.filter(product => regexp.test(product.product_name));
     },
   },
 
@@ -80,5 +80,5 @@ const app = new Vue({
           this.cartList.push(obj);
         }
       });
-  }
+  },
 });
