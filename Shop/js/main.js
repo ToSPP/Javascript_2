@@ -40,6 +40,7 @@ class ProductsList {
     const block = document.querySelector('.products');
     this.goodsData.forEach(product => {
       const prod = new Product(product);
+      this.products.push(prod);
       block.insertAdjacentHTML('beforeend', prod.render());
     });
   }
@@ -95,6 +96,7 @@ class Cart {
   constructor() {
     this.cartData = {};
     this.contents = [];
+    this.products = [];
     this.amount = 0;
     this.countGoods = 0;
     this.init();
@@ -151,25 +153,25 @@ class Cart {
       .then(result => {
         if (!!result) {
           // Найдем индекс продукта, если он уже присутствует в корзине
-          const idx = this.contents.findIndex(el => el.id_product === product.id_product);
+          const idx = this.products.findIndex(el => el.id_product === product.id_product);
 
           if (!!~idx) {
             // Если такой продукт уже есть в корзине
 
             // Увеличиваем количество
-            const qty = ++this.contents[idx].quantity;
+            const qty = ++this.products[idx].quantity;
             // Увеличиваем общую сумму корзины
-            this.amount += this.contents[idx].price;
+            this.amount += this.products[idx].price;
             // Находим нужный элемент
             const element = document.querySelector(`.cart__items [data-id='${product.id_product}']`);
             // Присвоим новое количество
             element.querySelector('.cart-item__qty').textContent = qty;
             // Присвоим новую сумму
-            element.querySelector('.cart-item__sum').textContent = qty * this.contents[idx].price;
+            element.querySelector('.cart-item__sum').textContent = qty * this.products[idx].price;
           } else {
             // Иначе - создаем новый элемент корзины и добавляем его
             const prod = new CartItem(product);
-            this.contents.push(prod);
+            this.products.push(prod);
             this.amount += prod.price;
             // Если корзина была пуста, то добавим "Итого"
             if (0 >= this.countGoods++) {
@@ -189,32 +191,32 @@ class Cart {
       .then(result => {
         if (!!result) {
           // Найдем индекс продукта в массиве
-          const idx = this.contents.findIndex(el => el.id_product === product.id_product);
+          const idx = this.products.findIndex(el => el.id_product === product.id_product);
 
           if (!!~idx) {
             // Находим нужный элемент
             const element = document.querySelector(`.cart__items [data-id='${product.id_product}']`);
 
-            if (this.contents[idx].quantity > 1) {
+            if (this.products[idx].quantity > 1) {
               // Если в корзине количество продукта больше, чем 1
 
               // Уменьшаем количество
-              const qty = --this.contents[idx].quantity;
+              const qty = --this.products[idx].quantity;
               // Уменьшаем общую сумму корзины
-              this.amount -= this.contents[idx].price;
+              this.amount -= this.products[idx].price;
               // Присвоим новое количество
               element.querySelector('.cart-item__qty').textContent = qty;
               // Присвоим новую сумму
-              element.querySelector('.cart-item__sum').textContent = qty * this.contents[idx].price;
+              element.querySelector('.cart-item__sum').textContent = qty * this.products[idx].price;
             } else {
               // Иначе - уменьшаем количество продуктов в корзине
               this.countGoods--;
               // Уменьшаем общую сумму корзины
-              this.amount -= this.contents[idx].price;
+              this.amount -= this.products[idx].price;
               // Удаляем элемент из DOM
               element.remove();
               // Удаляем продукт из общего массива
-              this.contents.splice(idx, 1);
+              this.products.splice(idx, 1);
             }
           }
 
@@ -241,22 +243,21 @@ class Cart {
 
     this.contents.forEach(product => {
       const prod = new CartItem(product);
+      this.products.push(prod);
       cartItemsElem.insertAdjacentHTML('beforeend', prod.render());
     });
-
-    cart.insertAdjacentHTML('beforeend', '<button class="btn-goToCart">Перейти в корзину</button>');
     this._renderCartTotal();
   }
 
   _renderCartTotal() {
-    const btn = document.querySelector('.btn-goToCart');
+    const cart = document.querySelector('.cart');
     if (this.countGoods > 0) {
       const totalElem
         = `<div class="cart-total">
            Итого: <span class="cart-total_value">${this.amount}</span> руб.
          </div>`;
       // Вставляем перед кнопкой "Перейти в корзину"
-      btn.insertAdjacentHTML('beforebegin', totalElem);
+      cart.insertAdjacentHTML('beforeend', totalElem);
     }
   }
 }
