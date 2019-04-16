@@ -12,9 +12,9 @@
 <div id="app">
   <header>
     <div class="header__logo logo">E-SHOP</div>
-    <form action="#" method="get" id='filterForm' class="filter__header filter">
+    <form action="#" method="get" id='filterForm' class="filter__header filter" @submit="filter" >
       <input type="text" v-model="filterText" class="filter__input">
-      <button type="submit" @click="filter" class="filter__submit">
+      <button type="submit" class="filter__submit">
         <svg class="filter__icon"
              xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
           <path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416
@@ -28,7 +28,7 @@
             @click="isVisibleCart = !isVisibleCart">Корзина
     </button>
     <transition name="fade">
-      <div v-if="isVisibleCart" class="cart">
+      <div v-show="isVisibleCart" class="cart">
         <div class="cart__items">
           <div class="cart-item" v-for="product in cartList" :key="product.id_product">
             <img :src="imgCart" alt="Some img">
@@ -44,7 +44,7 @@
             </div>
           </div>
         </div>
-        <div class="cart-total" v-if="cartList.length > 0">
+        <div class="cart-total" v-if="cartList.length">
           Итого: <span class="cart-total_value">{{ getTotalPrice() }}</span> руб.
         </div>
         <div class="cart-empty" v-else>Корзина пуста</div>
@@ -54,7 +54,7 @@
   <main>
     <div class="products">
       <div class="product-item"
-           v-for="product in filteredProducts.length > 0 ? filteredProducts : productsAll"
+           v-for="product in filteredProducts.length ? filteredProducts : productsAll"
            :key="product.id_product">
         <img :src="imgCatalog" alt="Some img">
         <div class="product-item__desc">

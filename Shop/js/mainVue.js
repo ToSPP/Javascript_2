@@ -30,12 +30,8 @@ const app = new Vue({
             if (!!item) {
               item.quantity++;
             } else {
-              this.cartList.push({
-                id_product: product.id_product,
-                product_name: product.product_name,
-                price: product.price,
-                quantity: 1,
-              });
+              const newProd = Object.assign({quantity: 1}, product);
+              this.cartList.push(newProd);
             }
           }
         });
@@ -44,11 +40,7 @@ const app = new Vue({
       this.getJSON(`${API}deleteFromBasket.json`)
         .then(result => {
           if (!!result) {
-            const item = this.cartList.find(el => el.id_product === product.id_product);
-
-            if (!!item) {
-              item.quantity > 1 ? item.quantity-- : this.cartList.splice(this.cartList.indexOf(item), 1);
-            }
+            product.quantity > 1 ? product.quantity-- : this.cartList.splice(this.cartList.indexOf(product), 1);
           }
         });
     }, // удаляем единицу продукта
@@ -56,6 +48,7 @@ const app = new Vue({
       return this.cartList.reduce((sum, product) => sum + product.quantity * product.price, 0);
     }, // получаем общую сумму корзины
     filter() {
+      event.preventDefault();
       const regexp = new RegExp(this.filterText, 'i');
       this.filteredProducts = this.productsAll.filter(product => regexp.test(product.product_name));
     },
