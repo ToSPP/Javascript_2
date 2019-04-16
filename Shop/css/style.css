@@ -5,6 +5,10 @@ html {
 }
 
 body {
+  height: 100%;
+}
+
+#app {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -40,6 +44,40 @@ header {
   color: #fff;
 }
 
+.filter__header {
+  margin-top: 2px;
+  margin-right: 30px;
+  margin-left: auto;
+}
+
+.filter {
+  position: relative;
+}
+
+.filter__input {
+  padding: 7px 30px 7px 10px;
+  background-color: rgba(100, 100, 100, .25);
+  border: 1px solid #346954;
+  border-radius: 5px;
+  color: #fff;
+  outline: none;
+}
+
+.filter__submit {
+  position: absolute;
+  top: 6px;
+  right: 1px;
+  background-color: transparent;
+  border: none;
+  color: #346954;
+  outline: none;
+  cursor: pointer;
+}
+
+.filter__icon {
+  width: 18px;
+}
+
 .btn-cart {
   position: relative;
   width: 115px;
@@ -71,12 +109,14 @@ header {
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 3px;
-  opacity: 0;
   transition: opacity .5s;
 }
 
-.cart_active {
-  opacity: 1;
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
 
 .cart-item {
@@ -144,12 +184,16 @@ header {
   color: #fff;
 }
 
-.cart-total {
-  margin-top: 15px;
-  margin-bottom: 15px;
+.cart-total,
+.cart-empty {
   text-align: center;
   font-size: 1.05rem;
   font-weight: 600;
+}
+
+.cart-total {
+  margin-top: 15px;
+  margin-bottom: 5px;
 }
 
 .btn-goToCart {
@@ -226,6 +270,7 @@ main {
   border-radius: 5px;
   color: #0B5FA5;
   cursor: pointer;
+  outline: none;
   transition: all .4s;
 }
 
