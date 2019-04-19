@@ -1,0 +1,12 @@
+[
+  {
+    "id_product": 100,
+    "product_name": "Клавиатура",
+    "price": 3000
+  },
+  {
+    "id_product": 200,
+    "product_name": "Принтер",
+    "price": 20000
+  }
+]
