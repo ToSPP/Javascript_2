@@ -50,13 +50,21 @@ Vue.component('cart', {
       }
     },
     removeProduct(product) {
-      this.$parent.getJSON(`${API}deleteFromBasket.json`)
-        .then(data => {
-          if (data.result) {
-            product.quantity > 1 ? product.quantity-- : this.cartList.splice(this.cartList.indexOf(product), 1);
-          }
-        })
-        .catch(error => console.log(error));;
+      if (product.quantity > 1) {
+        this.$parent.putJSON(`/api/cart/${product.id_product}`, {quantity: -1})
+          .then(data => {
+            if (data.result) {
+              product.quantity--;
+            }
+          })
+      } else {
+        this.$parent.delJSON(`/api/cart/${product.id_product}`)
+          .then(data => {
+            if (data.result) {
+              this.cartList.splice(this.cartList.indexOf(product), 1)
+            }
+          })
+      }
     },
     getTotalPrice() {
       return this.cartList.reduce((sum, product) => sum + product.quantity * product.price, 0);

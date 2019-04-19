@@ -30,5 +30,12 @@ const app = new Vue({
         .then(response => response.json())
         .catch(() => this.$refs.errorComp.setError());
     },
+    delJSON(url) {
+      return fetch(url, {
+        method: "DELETE",
+      })
+        .then(response => response.json())
+        .catch(() => this.$refs.errorComp.setError());
+    },
   },
 });
