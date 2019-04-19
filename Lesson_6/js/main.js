@@ -6,7 +6,7 @@ const app = new Vue({
     getJSON(src) {
       return fetch(src)
         .then(response => response.json())
-        .catch(() => this.$root.$refs.errorComp.isError = true);
+        .catch(() => this.$root.$refs.errorComp.setError());
     },
   },
 });

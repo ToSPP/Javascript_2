@@ -4,16 +4,9 @@ Vue.component('filter-prod', {
       filterText: '',
     }
   },
-  methods: {
-    filter() {
-      event.preventDefault();
-      const regexp = new RegExp(this.filterText, 'i');
-      this.$root.$refs.products.filteredProducts
-        = this.$root.$refs.products.productsAll.filter(product => regexp.test(product.product_name));
-    },
-  },
   template: `
-    <form action="#" method="get" id='filterForm' class="filter__header filter" @submit="filter" >
+    <form action="#" method="get" id='filterForm' class="filter__header filter" 
+          @submit.prevent="$parent.$refs.products.filter(filterText)" >
       <input type="text" v-model="filterText" class="filter__input">
       <button type="submit" class="filter__submit">
         <svg class="filter__icon"

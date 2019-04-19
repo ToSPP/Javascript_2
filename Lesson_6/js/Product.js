@@ -7,6 +7,12 @@ Vue.component('products', {
       imgCatalog: 'https://placehold.it/200x150',
     }
   },
+  methods: {
+    filter(str) {
+      const regexp = new RegExp(str, 'i');
+      this.filteredProducts = this.productsAll.filter(product => regexp.test(product.product_name));
+    },
+  },
   template: `
     <div class="products">
       <product v-for="product in filteredProducts.length ? filteredProducts : productsAll"
@@ -22,14 +28,14 @@ Vue.component('products', {
           this.productsAll.push(obj);
         }
       })
-      .catch(() => this.$root.$refs.errorComp.error = 'Данные каталога не получены.');
+      .catch(() => this.$root.$refs.errorComp.setError('catalog'));
     this.$parent.getJSON('addProducts.json')
       .then(data => {
         for (const obj of data) {
           this.productsAll.push(obj);
         }
       })
-      .catch(() => this.$root.$refs.errorComp.error = 'Данные каталога не получены.');
+      .catch(() => this.$root.$refs.errorComp.setError('catalog'));
   },
 });
 

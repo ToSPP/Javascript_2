@@ -43,7 +43,8 @@ Vue.component('cart', {
               this.cartList.push(newProd);
             }
           }
-        });
+        })
+        .catch(error => console.log(error));
     },
     removeProduct(product) {
       this.$parent.getJSON(`${API}deleteFromBasket.json`)
@@ -51,7 +52,8 @@ Vue.component('cart', {
           if (data.result) {
             product.quantity > 1 ? product.quantity-- : this.cartList.splice(this.cartList.indexOf(product), 1);
           }
-        });
+        })
+        .catch(error => console.log(error));;
     },
     getTotalPrice() {
       return this.cartList.reduce((sum, product) => sum + product.quantity * product.price, 0);
@@ -64,7 +66,7 @@ Vue.component('cart', {
           this.cartList.push(obj);
         }
       })
-      .catch(() => this.$root.$refs.errorComp.error = 'Данные корзины не получены.');
+      .catch(() => this.$root.$refs.errorComp.setError('cart'));
   },
 });
 
